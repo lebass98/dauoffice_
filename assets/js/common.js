@@ -28,3 +28,30 @@ async function loadHeaderFooter() {
 // DOM이 로드된 후 실행
 document.addEventListener('DOMContentLoaded', loadHeaderFooter);
 
+// work-environment 탭 기능
+document.addEventListener('DOMContentLoaded', function() {
+    const workTabs = document.querySelectorAll('.work-tab');
+    const workContents = document.querySelectorAll('.work-environment-content-box');
+
+    workTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const tabIndex = this.getAttribute('data-tab');
+
+            // 모든 탭에서 active 클래스 제거
+            workTabs.forEach(t => t.classList.remove('active'));
+            // 클릭한 탭에 active 클래스 추가
+            this.classList.add('active');
+
+            // 모든 내용 숨기기
+            workContents.forEach(content => {
+                content.style.display = 'none';
+            });
+            // 선택한 탭의 내용 보이기
+            const selectedContent = document.querySelector(`.work-environment-content-box[data-content="${tabIndex}"]`);
+            if (selectedContent) {
+                selectedContent.style.display = 'block';
+            }
+        });
+    });
+});
+
